@@ -2,6 +2,8 @@
 
 A minimalist portfolio served with GitHub Pages.
 
+**Live site:** https://marcos-bernal-ai.github.io/pages-io/
+
 The landing page (`index.html`) finds every project in the `pages/` folder and
 shows the **latest version** of each one as a card with a preview image.
 
