@@ -70,9 +70,37 @@ body {
   padding-inline: 24px;
 }
 
+/* ---------- Top bar ---------- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 28px;
+}
+.logo {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+.topbar-link {
+  font-size: .9rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.topbar-link:hover { color: var(--text); }
+
 /* ---------- Header ---------- */
 
-header { padding: 96px 0 56px; }
+header { padding: 56px 0 56px; }
 
 .eyebrow {
   margin: 0 0 16px;
@@ -231,11 +259,27 @@ footer {
   color: var(--muted);
 }
 footer p {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
   margin: 0;
   padding-top: 32px;
   border-top: 1px solid var(--line);
 }
-footer a { color: inherit; }
+footer a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: border-color .2s ease;
+}
+footer a:hover { border-color: currentColor; }
+.heart { color: var(--accent); }
+.claude {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
 
 /* ---------- Animations ---------- */
 

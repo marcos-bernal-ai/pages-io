@@ -1,61 +1,11 @@
-// Folder that holds the projects: pages/<project>/<project>_vXX.html (+ .jpg)
-const PAGES_DIR = "pages";
+// Project list built by scripts/build_index.py (latest version of each project)
+const INDEX_URL = "pages/index.json";
 
-// Repo for the "Source" link when the site is not served from <owner>.github.io/<repo>
-const FALLBACK_OWNER = "marcos-bernal-ai";
-const FALLBACK_REPO = "pages-io";
-
-function getRepo() {
-  const host = location.hostname;
-  if (host.endsWith(".github.io")) {
-    const owner = host.replace(".github.io", "");
-    const firstPath = location.pathname.split("/")[1];
-    // Project site: owner.github.io/repo — User site: owner.github.io
-    return { owner, repo: firstPath || host };
-  }
-  return { owner: FALLBACK_OWNER, repo: FALLBACK_REPO };
-}
-
-// Read the file list that the GitHub Action writes to pages/index.json
-async function listFiles() {
-  const res = await fetch(`${PAGES_DIR}/index.json`, { cache: "no-cache" });
-  if (!res.ok) throw new Error(`${PAGES_DIR}/index.json returned ${res.status}`);
-  return res.json();
-}
-
-// Keep only the highest _vXX.html of each project folder
-function latestVersions(paths) {
-  const pattern = new RegExp(`^${PAGES_DIR}/([^/]+)/([^/]+)_v(\\d+)\\.html$`, "i");
-  const projects = {};
-
-  for (const path of paths) {
-    const match = path.match(pattern);
-    if (!match) continue;
-    const [, folder, , version] = match;
-    const number = parseInt(version, 10);
-    const current = projects[folder];
-    if (!current) {
-      projects[folder] = { folder, number, version, html: path, versions: 1 };
-    } else {
-      current.versions++;
-      if (number > current.number) Object.assign(current, { number, version, html: path });
-    }
-  }
-
-  const fileSet = new Set(paths);
-  return Object.values(projects)
-    .map(p => {
-      const jpg = p.html.replace(/\.html$/i, ".jpg");
-      return { ...p, image: fileSet.has(jpg) ? jpg : null };
-    })
-    .sort((a, b) => a.folder.localeCompare(b.folder));
-}
-
-// "my_project-name" -> "My Project Name"
-function prettyName(folder) {
-  return folder
-    .replace(/[_-]+/g, " ")
-    .replace(/\b\w/g, c => c.toUpperCase());
+async function loadProjects() {
+  const res = await fetch(INDEX_URL, { cache: "no-cache" });
+  if (!res.ok) throw new Error(`${INDEX_URL} returned ${res.status}`);
+  const data = await res.json();
+  return data.projects;
 }
 
 function render(projects) {
@@ -66,22 +16,21 @@ function render(projects) {
   projects.forEach((p, i) => {
     const card = template.content.cloneNode(true);
     const link = card.querySelector("a");
-    const name = prettyName(p.folder);
 
     link.href = p.html;
     link.style.animationDelay = (i * 80) + "ms";
-    card.querySelector("h2").textContent = name;
+    card.querySelector("h2").textContent = p.name;
     card.querySelector("p").textContent =
       "v" + p.version + (p.versions > 1 ? " · " + p.versions + " versions" : "");
 
     const img = card.querySelector("img");
     if (p.image) {
       img.src = p.image;
-      img.alt = name + " preview";
+      img.alt = p.name + " preview";
     } else {
       const placeholder = document.createElement("span");
       placeholder.className = "placeholder";
-      placeholder.textContent = name.charAt(0);
+      placeholder.textContent = p.name.charAt(0);
       img.replaceWith(placeholder);
     }
 
@@ -93,15 +42,17 @@ function render(projects) {
 }
 
 function showMessage(text) {
-  document.getElementById("grid").innerHTML = `<p class="message">${text}</p>`;
+  const message = document.createElement("p");
+  message.className = "message";
+  message.textContent = text;
+  document.getElementById("grid").replaceChildren(message);
 }
 
 async function init() {
-  const { owner, repo } = getRepo();
-  document.getElementById("repo-link").href = `https://github.com/${owner}/${repo}`;
+  document.getElementById("year").textContent = new Date().getFullYear();
 
   try {
-    const projects = latestVersions(await listFiles());
+    const projects = await loadProjects();
     if (projects.length === 0) {
       showMessage("No projects yet.");
       return;
