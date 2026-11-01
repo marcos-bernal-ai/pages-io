@@ -16,6 +16,7 @@ assets/
   js/portfolio.js                  reads pages/index.json and builds the cards
   fonts/                           self-hosted fonts (SIL Open Font License)
   favicon.svg                      "MB" tab icon
+  claude.svg                       Claude icon used in the footer (from claude.ai)
 pages/
   <project>/<project>_v01.html     a version of the project
   <project>/<project>_v01.jpg      its preview image (optional)
