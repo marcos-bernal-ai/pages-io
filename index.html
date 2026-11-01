@@ -3,13 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <h1>Hello World</h1>
-  <p>Welcome to my GitHub Pages website.</p>
 
-  <a href="hello-world-2.html">Go to Hello World 2</a>
+  <header class="wrap">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Selected <em>work</em></h1>
+    <p class="intro">A collection of projects and experiments, each shown in its latest version.</p>
+  </header>
+
+  <main class="wrap">
+    <div class="bar">
+      <span>Projects</span>
+      <span id="count"></span>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Skeleton cards, replaced once projects load -->
+      <div class="card skeleton"><div class="thumb"></div><div class="line"></div></div>
+      <div class="card skeleton"><div class="thumb"></div><div class="line"></div></div>
+      <div class="card skeleton"><div class="thumb"></div><div class="line"></div></div>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <p>Hosted on GitHub Pages · <a href="#" id="repo-link">Source</a></p>
+  </footer>
+
+  <!-- Card template: cloned once per project -->
+  <template id="card-template">
+    <a class="card" href="#">
+      <div class="thumb"><img src="" alt="" loading="lazy"></div>
+      <div class="meta">
+        <div>
+          <h2></h2>
+          <p></p>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+    </a>
+  </template>
+
+  <script src="assets/js/portfolio.js"></script>
 </body>
 </html>
-
