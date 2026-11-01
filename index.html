@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
+  <title>MB Portfolio</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
+  <nav class="topbar wrap">
+    <a class="logo" href="./" aria-label="MB Portfolio home">MB</a>
+    <a class="topbar-link" href="https://github.com/marcos-bernal-ai">GitHub ↗</a>
+  </nav>
+
   <header class="wrap">
-    <p class="eyebrow">Portfolio</p>
+    <p class="eyebrow">MB Portfolio</p>
     <h1>Selected <em>work</em></h1>
-    <p class="intro">A collection of projects and experiments, each shown in its latest version.</p>
+    <p class="intro">Here you'll find some of the projects I've been working on. Feel free to take a look.</p>
   </header>
 
   <main class="wrap">
@@ -29,7 +35,17 @@
   </main>
 
   <footer class="wrap">
-    <p>Hosted on GitHub Pages · <a href="#" id="repo-link">Source</a></p>
+    <p>
+      <span>
+        Coded with <span class="heart" aria-label="love">♥</span>
+        by <a href="https://github.com/marcos-bernal-ai">Marcos Bernal</a>
+        and <a class="claude" href="https://claude.ai">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+            <path d="M12 12L12 1.5M12 12L15.8 5.5M12 12L21.1 6.8M12 12L19.5 12M12 12L21.1 17.2M12 12L15.8 18.5M12 12L12 22.5M12 12L8.3 18.5M12 12L2.9 17.2M12 12L4.5 12M12 12L2.9 6.7M12 12L8.2 5.5"/>
+          </svg>Claude</a>
+      </span>
+      <span>© <span id="year">2026</span> MB Portfolio</span>
+    </p>
   </footer>
 
   <!-- Card template: cloned once per project -->
